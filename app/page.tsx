@@ -1,21 +1,4 @@
-'use client';
-
-import React, { useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import AuthModal from '@/components/auth/AuthModal';
-import UserMenu from '@/components/layout/UserMenu';
-import { User, LogIn } from 'lucide-react';
-
 export default function HomePage() {
-  const { user } = useAuth();
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
-
-  const handleAuthClick = (mode: 'login' | 'register') => {
-    setAuthMode(mode);
-    setAuthModalOpen(true);
-  };
-
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-slate-900 shadow-lg sticky top-0 z-50">
@@ -35,17 +18,6 @@ export default function HomePage() {
               <a href="#rates" className="text-slate-300 hover:text-white transition-colors">Rates</a>
               <a href="#about" className="text-slate-300 hover:text-white transition-colors">About</a>
               <a href="#contact" className="text-slate-300 hover:text-white transition-colors">Contact</a>
-              {user && (
-                <>
-                  <a href="/dashboard" className="text-slate-300 hover:text-white transition-colors">Dashboard</a>
-                  {user.role === 'investor' && (
-                    <a href="/investor" className="text-slate-300 hover:text-white transition-colors">Invest</a>
-                  )}
-                  {user.role === 'admin' && (
-                    <a href="/admin" className="text-slate-300 hover:text-white transition-colors">Admin</a>
-                  )}
-                </>
-              )}
             </nav>
             <div className="flex items-center space-x-4">
               <button className="text-slate-300 hover:text-white transition-colors">
@@ -54,30 +26,31 @@ export default function HomePage() {
                 </svg>
               </button>
               
-              {user ? (
-                <UserMenu />
-              ) : (
-                <div className="flex items-center space-x-3">
-                  <button 
-                    onClick={() => handleAuthClick('login')}
-                    className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:bg-white/10"
-                  >
-                    <LogIn className="w-4 h-4" />
-                    <span>Sign In</span>
-                  </button>
-                  <button 
-                    onClick={() => handleAuthClick('register')}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors flex items-center space-x-2"
-                  >
-                    <User className="w-4 h-4" />
-                    <span>Get Started</span>
-                  </button>
-                </div>
-              )}
+              <div className="flex items-center space-x-3">
+                <a 
+                  href="/login"
+                  className="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors px-4 py-2 rounded-lg hover:bg-white/10"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                  </svg>
+                  <span>Sign In</span>
+                </a>
+                <a 
+                  href="/register"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors flex items-center space-x-2"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                  <span>Get Started</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </header>
+
       <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 text-white py-32 lg:py-40 overflow-hidden">
         <div className="absolute inset-0 bg-black/30"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/60 to-transparent"></div>
@@ -102,14 +75,14 @@ export default function HomePage() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-              <button className="group bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-6 px-12 rounded-xl transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 text-xl transform hover:-translate-y-1">
+              <a href="/register" className="group bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-6 px-12 rounded-xl transition-all duration-300 shadow-2xl hover:shadow-blue-500/25 text-xl transform hover:-translate-y-1">
                 <span className="flex items-center justify-center">
                   Apply for Loan
                   <svg className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </span>
-              </button>
+              </a>
               <button className="group border-2 border-white/30 text-white hover:bg-white hover:text-slate-900 font-bold py-6 px-12 rounded-xl transition-all duration-300 backdrop-blur-sm hover:shadow-2xl text-xl transform hover:-translate-y-1">
                 <span className="flex items-center justify-center">
                   View Current Rates
@@ -279,164 +252,6 @@ export default function HomePage() {
                 </svg>
               </div>
             </div>
-            
-            <div className="group bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl p-8 border border-orange-200 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-4">Expert Support</h3>
-              <p className="text-slate-600 leading-relaxed mb-6">
-                Dedicated loan officers with 10+ years of experience. Get personalized guidance from application to closing and beyond.
-              </p>
-              <div className="flex items-center text-orange-600 font-semibold group-hover:translate-x-2 transition-transform duration-300">
-                Meet Our Team
-                <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </div>
-            
-            <div className="group bg-gradient-to-br from-red-50 to-red-100 rounded-2xl p-8 border border-red-200 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
-              <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-4">Flexible Terms</h3>
-              <p className="text-slate-600 leading-relaxed mb-6">
-                Loan amounts from $50K to $10M with terms from 6-24 months. We work with your timeline and investment strategy.
-              </p>
-              <div className="flex items-center text-red-600 font-semibold group-hover:translate-x-2 transition-transform duration-300">
-                Loan Options
-                <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </div>
-            
-            <div className="group bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-2xl p-8 border border-indigo-200 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
-              <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-4">Proven Track Record</h3>
-              <p className="text-slate-600 leading-relaxed mb-6">
-                98.5% success rate with $2.5B+ in loans funded. Join 500+ successful investors who trust us with their deals.
-              </p>
-              <div className="flex items-center text-indigo-600 font-semibold group-hover:translate-x-2 transition-transform duration-300">
-                Success Stories
-                <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-24 bg-gradient-to-br from-slate-900 to-slate-800 text-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-20">
-            <div className="inline-flex items-center px-4 py-2 bg-white/10 rounded-full mb-6">
-              <span className="text-white font-semibold text-sm">CLIENT SUCCESS STORIES</span>
-            </div>
-            <h2 className="text-5xl lg:text-6xl font-black mb-6 leading-tight">
-              What Our Clients
-              <span className="block bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Say About Us</span>
-            </h2>
-            <p className="text-xl lg:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
-              Don&apos;t just take our word for it. Hear from real investors who have built their portfolios with our funding.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="group bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:bg-white/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
-              <div className="flex items-center mb-6">
-                <div className="flex text-yellow-400">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-              </div>
-              <blockquote className="text-lg text-slate-200 mb-6 leading-relaxed">
-                &quot;HardMoney Capital has been instrumental in my real estate success. Their fast approval process and competitive rates helped me close 12 deals this year alone.&quot;
-              </blockquote>
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-white font-bold text-lg">SM</span>
-                </div>
-                <div>
-                  <div className="font-semibold text-white">Sarah Mitchell</div>
-                  <div className="text-sm text-slate-400">Real Estate Investor</div>
-                  <div className="text-sm text-slate-500">$2.3M in loans funded</div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="group bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:bg-white/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
-              <div className="flex items-center mb-6">
-                <div className="flex text-yellow-400">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-              </div>
-              <blockquote className="text-lg text-slate-200 mb-6 leading-relaxed">
-                &quot;The team&apos;s expertise and personalized service made all the difference. They understood my investment strategy and provided flexible terms that worked perfectly.&quot;
-              </blockquote>
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-white font-bold text-lg">MJ</span>
-                </div>
-                <div>
-                  <div className="font-semibold text-white">Michael Johnson</div>
-                  <div className="text-sm text-slate-400">Property Developer</div>
-                  <div className="text-sm text-slate-500">$5.1M in loans funded</div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="group bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:bg-white/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
-              <div className="flex items-center mb-6">
-                <div className="flex text-yellow-400">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-              </div>
-              <blockquote className="text-lg text-slate-200 mb-6 leading-relaxed">
-                &quot;I&apos;ve worked with many lenders, but HardMoney Capital stands out. Their transparency, speed, and support team are unmatched in the industry.&quot;
-              </blockquote>
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mr-4">
-                  <span className="text-white font-bold text-lg">AL</span>
-                </div>
-                <div>
-                  <div className="font-semibold text-white">Amanda Lee</div>
-                  <div className="text-sm text-slate-400">Real Estate Broker</div>
-                  <div className="text-sm text-slate-500">$3.7M in loans funded</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="text-center mt-16">
-            <div className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600/20 to-blue-500/20 backdrop-blur-sm rounded-full border border-blue-400/30">
-              <svg className="w-6 h-6 text-blue-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-              <span className="text-white font-semibold">Join 500+ Successful Investors</span>
-            </div>
           </div>
         </div>
       </section>
@@ -458,23 +273,6 @@ export default function HomePage() {
               <p className="text-slate-300 leading-relaxed mb-6 max-w-md">
                 Your trusted partner for fast, reliable hard money loans. We&apos;ve helped 500+ investors fund over $2.5B in real estate deals.
               </p>
-              <div className="flex space-x-4">
-                <a href="#" className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                  </svg>
-                </a>
-                <a href="#" className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
-                  </svg>
-                </a>
-                <a href="#" className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
-                </a>
-              </div>
             </div>
             
             <div>
@@ -484,7 +282,7 @@ export default function HomePage() {
                 <li><a href="#rates" className="text-slate-300 hover:text-white transition-colors">Current Rates</a></li>
                 <li><a href="#about" className="text-slate-300 hover:text-white transition-colors">About Us</a></li>
                 <li><a href="#contact" className="text-slate-300 hover:text-white transition-colors">Contact</a></li>
-                <li><a href="#" className="text-slate-300 hover:text-white transition-colors">Apply Now</a></li>
+                <li><a href="/register" className="text-slate-300 hover:text-white transition-colors">Apply Now</a></li>
               </ul>
             </div>
             
@@ -528,13 +326,6 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
-
-      {/* Auth Modal */}
-      <AuthModal 
-        isOpen={authModalOpen}
-        onClose={() => setAuthModalOpen(false)}
-        defaultMode={authMode}
-      />
     </div>
   );
 }
