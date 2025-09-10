@@ -1,4 +1,5 @@
 export default function HomePage() {
+  // Public homepage - no authentication required - force rebuild
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-slate-900 shadow-lg sticky top-0 z-50">
