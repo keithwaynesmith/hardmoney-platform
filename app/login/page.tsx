@@ -1,4 +1,4 @@
-export default function RegisterPage() {
+export default function LoginPage() {
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center">
       <div className="max-w-md w-full space-y-8 p-8">
@@ -7,47 +7,18 @@ export default function RegisterPage() {
             <span className="text-white font-bold text-xl">H</span>
           </div>
           <h2 className="mt-6 text-3xl font-bold text-slate-900">
-            Create your account
+            Sign in to your account
           </h2>
           <p className="mt-2 text-sm text-slate-600">
             Or{' '}
-            <a href="/login" className="font-medium text-blue-600 hover:text-blue-500">
-              sign in to your existing account
+            <a href="/register" className="font-medium text-blue-600 hover:text-blue-500">
+              create a new account
             </a>
           </p>
         </div>
 
         <div className="bg-white rounded-lg shadow-lg p-8">
           <form className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="firstName" className="block text-sm font-medium text-slate-700">
-                  First name
-                </label>
-                <input
-                  id="firstName"
-                  name="firstName"
-                  type="text"
-                  required
-                  className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="John"
-                />
-              </div>
-              <div>
-                <label htmlFor="lastName" className="block text-sm font-medium text-slate-700">
-                  Last name
-                </label>
-                <input
-                  id="lastName"
-                  name="lastName"
-                  type="text"
-                  required
-                  className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Doe"
-                />
-              </div>
-            </div>
-
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-slate-700">
                 Email address
@@ -58,7 +29,7 @@ export default function RegisterPage() {
                 type="email"
                 required
                 className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="john@example.com"
+                placeholder="Enter your email"
               />
             </div>
 
@@ -72,22 +43,14 @@ export default function RegisterPage() {
                 type="password"
                 required
                 className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Create a strong password"
+                placeholder="Enter your password"
               />
             </div>
 
-            <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-700">
-                Confirm password
-              </label>
-              <input
-                id="confirmPassword"
-                name="confirmPassword"
-                type="password"
-                required
-                className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Confirm your password"
-              />
+            <div className="flex items-center justify-between">
+              <a href="/reset-password" className="text-sm text-blue-600 hover:text-blue-500">
+                Forgot your password?
+              </a>
             </div>
 
             <div>
@@ -95,16 +58,16 @@ export default function RegisterPage() {
                 type="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
-                Create account
+                Sign in
               </button>
             </div>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-slate-600">
-              Already have an account?{' '}
-              <a href="/login" className="font-medium text-blue-600 hover:text-blue-500">
-                Sign in here
+              Don't have an account?{' '}
+              <a href="/register" className="font-medium text-blue-600 hover:text-blue-500">
+                Sign up here
               </a>
             </p>
           </div>
